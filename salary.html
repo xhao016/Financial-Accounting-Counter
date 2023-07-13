@@ -42,6 +42,7 @@
 
           // Create a new row for the user data
           var userRow = document.createElement('tr');
+          userRow.setAttribute('data-id', user.id); // add this line to set the data-id attribute
           userRow.innerHTML = '<td>' + month + '</td>' +
                               '<td>' + salary + '</td>' +
                               '<td>' + '<button class="btn btn-success">View</button> <button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button>' + '</td>'; 
@@ -51,6 +52,7 @@
             viewButton.addEventListener('click', function() {
             window.location.href = 'display.html?id=' + user.id;
             });
+
           // Add the user data to the table
           usersTableBody.appendChild(userRow);
         }
