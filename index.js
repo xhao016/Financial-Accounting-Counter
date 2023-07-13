@@ -1,0 +1,56 @@
+ // Reset button clear all on click
+
+ const resetButton = document.querySelector('#reset');
+ const inputFields = document.querySelectorAll('input');
+
+ resetButton.addEventListener('click', () => {
+ inputFields.forEach((input) => {
+     input.value = '';
+ });
+ });
+
+
+
+ $(document).ready(function() {
+     // Open the database
+     var db = openDatabase('mydb', '1.0', 'My Database', 2 * 1024 * 1024);
+   
+     // Create the table if it does not exist
+     db.transaction(function(tx) {
+       tx.executeSql('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, month TEXT, necessity TEXT, financial TEXT, education TEXT, longterm TEXT, entertainment TEXT, give TEXT)');
+     });
+   
+     // Handle the form submission
+     $("#register_form").on("submit", function(event) {
+       event.preventDefault();
+       if (this.checkValidity()) {
+
+            var month = $("#month").val();
+            var salaryInput = $("#salary").val();
+
+            const salary = parseFloat(salaryInput);
+            const necessity = salary * 0.55;
+            const financial = salary * 0.1;
+            const education = salary * 0.1;
+            const longTerm = salary * 0.1;
+            const entertainment = salary * 0.1;
+            const give = salary * 0.05;
+
+        
+   
+         // Insert the user into the database
+         db.transaction(function(tx) {
+           tx.executeSql('INSERT INTO users (month, necessity, financial, education, longterm, entertainment, give) VALUES (?, ?, ?, ?, ?, ?, ?)', [month, necessity, financial, education, longTerm, entertainment, give], function(tx, results) {
+             alert("Calculate successful!");
+             
+             // Redirect to the display page
+             window.location.href = 'display.html';
+             
+           }, function(tx, error) {
+             alert("Error: " + error.message);
+           });
+         });
+       }
+       $(this).addClass('was-validated');
+     });
+   });
