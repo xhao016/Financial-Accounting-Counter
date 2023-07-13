@@ -9,15 +9,22 @@
 </head>
 
 <body>
-  <div class="container mt-5">
-<button class="btn btn-primary" onclick="window.location.href = 'index.html'">Calculate Again</button>
-<button class="btn btn-primary print">Print</button>
-<table id="usersalary" class="table table-bordered table-light table-hover">
+  <style>
+
+  </style>
+  <div class="container w-50 my-5 border border-2 rounded px-5 py-3 shadow">
+    <h2 class="text-center">Salary List</h2>
+    <div class="d-flex align-items-center gap-2">
+<button class="btn btn-primary" onclick="window.location.href = 'index.html'">Calculate</button>
+<button class="btn btn-primary ms-auto print">Print</button>
+</div>
+
+<table id="usersalary" class=" mt-3 table table-hover text-center align-middle">
   <thead>
-    <tr>
-      <th scope="col">Date</th>
+    <tr class="table-dark">
+      <th scope="col" >Date</th>
       <th scope="col">Salary</th>
-      <th scope="col">Action</th>
+      <th scope="col" >Action</th>
     </tr>
   </thead>
   <tbody>
@@ -25,7 +32,15 @@
 </table>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script>
+
+$(document).ready(function() {
+  $('.print').click(function() {
+    window.print();
+  });
+});
+
   // Open the database
   var db = openDatabase('mydb', '1.0', 'My Database', 2 * 1024 * 1024);
 
@@ -102,11 +117,7 @@
     });
   });
 
-  $(document).ready(function() {
-  $('.print').click(function() {
-    window.print();
-  });
-});
+
 
 </script>
 </body>
