@@ -17,14 +17,9 @@
    
      // Create the table if it does not exist
      db.transaction(function(tx) {
-       tx.executeSql('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, month TEXT, necessity TEXT, financial TEXT, education TEXT, longterm TEXT, entertainment TEXT, give TEXT)');
+       tx.executeSql('CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, month TEXT, salary TEXT, necessity TEXT, financial TEXT, education TEXT, longterm TEXT, entertainment TEXT, give TEXT)');
      });
    
-     db.transaction(function(tx) {
-      tx.executeSql('CREATE TABLE IF NOT EXISTS usersalary (id INTEGER PRIMARY KEY, month TEXT, salary TEXT)');
-    });
-  
-
      // Handle the form submission
      $("#register_form").on("submit", function(event) {
        event.preventDefault();
@@ -45,13 +40,8 @@
    
          // Insert the user into the database
          db.transaction(function(tx) {
-           tx.executeSql('INSERT INTO users (month, necessity, financial, education, longterm, entertainment, give) VALUES (?, ?, ?, ?, ?, ?, ?)', [month, necessity, financial, education, longTerm, entertainment, give], function(tx, results) {
+           tx.executeSql('INSERT INTO users (month, salary, necessity, financial, education, longterm, entertainment, give) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', [month, salary, necessity, financial, education, longTerm, entertainment, give], function(tx, results) {
       
-            tx.executeSql('INSERT INTO usersalary (month, salary) VALUES (?, ?)', [month, salaryInput], function(tx, results) {
-              // This function will be called after the second statement is executed
-              // You can add more statements here if needed
-            });
-
              // Redirect to the display page
              window.location.href = 'salary.html';
              
