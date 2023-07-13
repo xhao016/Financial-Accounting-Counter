@@ -41,6 +41,7 @@
         var usersTableBody = document.querySelector('#users tbody');
         for (var i = 0; i < len; i++) {
           var user = results.rows.item(i);
+          var id = user.id;
           var month = user.month;
           var necessity = user.necessity;
           var financial = user.financial;
@@ -51,6 +52,7 @@
 
           // Create a new row for the user data
           var userRow = document.createElement('tr');
+          userRow.setAttribute('data-id', i + 1);
           userRow.innerHTML = '<td>' + month + '</td>' +
                               '<td>' + necessity + '</td>' +
                               '<td>' + financial + '</td>' +
@@ -62,9 +64,36 @@
           // Add the user data to the table
           usersTableBody.appendChild(userRow);
         }
+        // Get the ID value from the URL query parameter
+        var urlParams = new URLSearchParams(window.location.search);
+        id = urlParams.get('id');
+
+        // Find the table row with the matching ID value
+        userRow = document.querySelector('#users tr[data-id="' + id + '"]');
+
+        // Show only the matching table row
+        if (userRow) {
+          userRow.style.display = 'table-row';
+
+        // Hide all other rows
+          var rows = usersTableBody.querySelectorAll('tr');
+          for (var i = 0; i < rows.length; i++) {
+            if (rows[i] !== userRow) {
+              rows[i].style.display = 'none';
+            }
+          }
+        } else {
+          // If no matching ID value was found, show all rows
+          var rows = usersTableBody.querySelectorAll('tr');
+          for (var i = 0; i < rows.length; i++) {
+            rows[i].style.display = 'table-row';
+          }
+        }
       }
     });
   });
+
+    
 
   $(document).ready(function() {
   $('.print').click(function() {
