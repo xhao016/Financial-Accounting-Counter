@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Salary</title>
+</head>
+<body>
+  <h1>Edit Salary</h1>
+  <form id="edit-form">
+    <div>
+      <label for="salary">Salary:</label>
+      <input type="number" id="salary" name="salary" required>
+    </div>
+    <button type="submit">Save</button>
+  </form>
+</body>
+</html>
+
+
+<script>
+    // Open the database
+    var db = openDatabase('mydb', '1.0', 'My Database', 2 * 1024 * 1024);
+  
+    // Get the ID value from the URL query parameter
+    var urlParams = new URLSearchParams(window.location.search);
+    var id = urlParams.get('id');
+  
+    // Find the user with the matching ID value
+    db.transaction(function(tx) {
+      tx.executeSql('SELECT * FROM users WHERE id = ?', [id], function(tx, results) {
+        var user = results.rows.item(0);
+        var salaryInput = document.querySelector('#salary');
+        salaryInput.value = user.salary;
+      });
+    });
+  
+    // Handle the form submission
+    var editForm = document.querySelector('#edit-form');
+    editForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      // Get the new salary value from the form
+      var salaryInput = document.querySelector('#salary');
+      var newSalary = salaryInput.value;
+  
+      // Update the user's salary in the database
+      db.transaction(function(tx) {
+        tx.executeSql('UPDATE users SET salary = ? WHERE id = ?', [newSalary, id], function(tx, results) {
+          // Redirect back to the display page
+          window.location.href = 'salary.html';
+        });
+      });
+    });
+  </script>
