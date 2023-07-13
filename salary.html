@@ -31,7 +31,7 @@
 
   // Retrieve the form data from the database
   db.transaction(function(tx) {
-    tx.executeSql('SELECT * FROM usersalary', [], function(tx, results) {
+    tx.executeSql('SELECT * FROM users', [], function(tx, results) {
       var len = results.rows.length;
       if (len > 0) {
         var usersTableBody = document.querySelector('#usersalary tbody');
@@ -42,17 +42,48 @@
 
           // Create a new row for the user data
           var userRow = document.createElement('tr');
-          userRow.setAttribute('data-id', user.id); // add this line to set the data-id attribute
-          userRow.innerHTML = '<td>' + month + '</td>' +
-                              '<td>' + salary + '</td>' +
-                              '<td>' + '<button class="btn btn-success">View</button> <button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button>' + '</td>'; 
+            userRow.setAttribute('data-id', user.id); // add this line to set the data-id attribute
+            userRow.innerHTML = '<td>' + month + '</td>' +
+                                '<td>' + salary + '</td>' +
+                                '<td>' + '<button class="btn btn-success view-button" data-id="' + user.id + '">View</button> <button class="btn btn-primary edit-button" data-id="' + user.id + '">Edit</button> <button class="btn btn-danger delete-button" data-id="' + user.id + '">Delete</button>' + '</td>'; 
+
                                 
             // Add an event listener to the button element
-            var viewButton = userRow.querySelector('button');
+            var viewButton = userRow.querySelector('.view-button');
+
             viewButton.addEventListener('click', function() {
-            window.location.href = 'display.html?id=' + user.id;
+            var id = this.getAttribute('data-id'); // retrieve the id value from the data-id attribute
+            window.location.href = 'display.html?id=' + id;
             });
 
+            var editButton = userRow.querySelector('.edit-button');
+            editButton.addEventListener('click', function() {
+            var id = this.getAttribute('data-id'); // retrieve the id value from the data-id attribute
+            window.location.href = 'edit.html?id=' + id;
+            });
+
+            var deleteButton = userRow.querySelector('.delete-button');
+            deleteButton.addEventListener('click', function() {
+            var id = this.getAttribute('data-id'); // retrieve the id value from the data-id attribute
+            var confirmed = confirm('Are you sure you want to delete this record?'); // show confirmation dialog box
+            if (confirmed) {
+                var db = openDatabase('mydb', '1.0', 'My Database', 2 * 1024 * 1024); // open the database
+                db.transaction(function(tx) {
+                tx.executeSql('DELETE FROM users WHERE id = ?', [id], function(tx, result) {
+                    var rowsAffected = result.rowsAffected; // get the number of rows affected by the DELETE statement
+                    if (rowsAffected > 0) {
+                    var row = document.querySelector('tr[data-id="' + id + '"]'); // select the table row element with the corresponding data-id attribute
+                    if (row) {
+                        row.remove(); // remove the table row element from the DOM
+                    }
+                    }
+                });
+                });
+              }
+            });
+            
+            
+            
           // Add the user data to the table
           usersTableBody.appendChild(userRow);
         }
@@ -61,8 +92,8 @@
       id = urlParams.get('id');
 
       // Find the table row with the matching ID value
-      userRow = document.querySelector('#usersalary tr[data-id="' + id + '"]');
-
+      userRow = document.querySelector('#users tr[data-id="' + id + '"]');
+        
       // Show only the matching table row
       if (userRow) {
         userRow.style.display = 'table-row';
