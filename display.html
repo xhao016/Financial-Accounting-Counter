@@ -15,7 +15,6 @@
 <table id="users" class="table table-bordered table-light table-hover">
   <thead>
     <tr>
-      <th scope="col">Year & Month</th>
       <th scope="col">Necessity (55%)</th>
       <th scope="col">Financial (10%)</th>
       <th scope="col">Education (10%)</th>
@@ -53,7 +52,7 @@
           // Create a new row for the user data
           var userRow = document.createElement('tr');
           userRow.setAttribute('data-id', i + 1);
-          userRow.innerHTML = '<td>' + month + '</td>' +
+          userRow.innerHTML = 
                               '<td>' + necessity + '</td>' +
                               '<td>' + financial + '</td>' +
                               '<td>' + education +  '</td>' +
