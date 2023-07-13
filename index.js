@@ -28,13 +28,13 @@
             var month = $("#month").val();
             var salaryInput = $("#salary").val();
 
-            const salary = parseFloat(salaryInput);
-            const necessity = salary * 0.55;
-            const financial = salary * 0.1;
-            const education = salary * 0.1;
-            const longTerm = salary * 0.1;
-            const entertainment = salary * 0.1;
-            const give = salary * 0.05;
+            const salary = parseFloat(salaryInput).toFixed(2);;
+            const necessity = (salary * 0.55).toFixed(2);
+            const financial = (salary * 0.1).toFixed(2);
+            const education = (salary * 0.1).toFixed(2);
+            const longTerm = (salary * 0.1).toFixed(2);
+            const entertainment = (salary * 0.1).toFixed(2);
+            const give = (salary * 0.05).toFixed(2);
 
         
    
