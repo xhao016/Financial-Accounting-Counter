@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Edit Salary</title>
+  <title>Edit Details</title>
 </head>
 <body>
   <h1>Edit Salary</h1>
@@ -42,10 +42,18 @@
       // Get the new salary value from the form
       var salaryInput = document.querySelector('#salary');
       var newSalary = salaryInput.value;
+
+      const salary = parseFloat(newSalary);
+            const necessity = salary * 0.55;
+            const financial = salary * 0.1;
+            const education = salary * 0.1;
+            const longTerm = salary * 0.1;
+            const entertainment = salary * 0.1;
+            const give = salary * 0.05;
   
       // Update the user's salary in the database
       db.transaction(function(tx) {
-        tx.executeSql('UPDATE users SET salary = ? WHERE id = ?', [newSalary, id], function(tx, results) {
+        tx.executeSql('UPDATE users SET salary = ?, necessity = ?, financial = ?, education = ?, longTerm = ?, entertainment = ?, give = ? WHERE id = ?', [salary, necessity, financial, education, longTerm, entertainment, give, id], function(tx, results) {
           // Redirect back to the display page
           window.location.href = 'salary.html';
         });
