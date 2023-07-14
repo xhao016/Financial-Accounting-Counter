@@ -13,13 +13,20 @@
 </head>
 <body>
 
-  <div class="container w-25 my-5 border border-2 rounded px-5 py-3 shadow">
-    <h3 class="text-center mb-5">Edit Salary</h3>
+  <!-- Modal -->
+  <div class="modal-body">
+    <!-- Put your data table here -->
+
+  <div class="container edit-container w-25 my-5 border border-2 rounded py-3 shadow">
+    <h2 class="text-center mb-4">Edit Details</h2>
   <form id="edit-form">
-    <div class="mb-3 ">
+    <div class="mb-3">
+      <div class="mb-3">
+        <input type="date" class="form-control" id="month" name="month" required>
+      </div>
       <div class="input-group ">
       <span class="input-group-text">RM</span>
-      <input type="number" class="form-control " id="salary" name="salary" step="any" required>
+      <input type="number" class="form-control" id="salary" name="salary" step="any" required>
         <div class="invalid-feedback">
          Please input salary.
         </div>
@@ -29,6 +36,7 @@
     <button type="submit" class="btn btn-primary w-25 mt-4">Save</button>
   </div>
   </form>
+</div>
 </div>
 </body>
 </html>
@@ -47,7 +55,9 @@
       tx.executeSql('SELECT * FROM users WHERE id = ?', [id], function(tx, results) {
         var user = results.rows.item(0);
         var salaryInput = document.querySelector('#salary');
+        var monthInput = document.querySelector('#month');
         salaryInput.value = user.salary;
+        monthInput.value = user.month;
       });
     });
   
@@ -57,6 +67,7 @@
       event.preventDefault();
   
       // Get the new salary value from the form
+      var monthInput = document.querySelector('#month').value;
       var salaryInput = document.querySelector('#salary');
       var newSalary = salaryInput.value;
 
@@ -70,7 +81,7 @@
   
       // Update the user's salary in the database
       db.transaction(function(tx) {
-        tx.executeSql('UPDATE users SET salary = ?, necessity = ?, financial = ?, education = ?, longTerm = ?, entertainment = ?, give = ? WHERE id = ?', [salary, necessity, financial, education, longTerm, entertainment, give, id], function(tx, results) {
+        tx.executeSql('UPDATE users SET month = ?, salary = ?, necessity = ?, financial = ?, education = ?, longTerm = ?, entertainment = ?, give = ? WHERE id = ?', [monthInput, salary, necessity, financial, education, longTerm, entertainment, give, id], function(tx, results) {
           // Redirect back to the display page
           window.location.href = 'salary.html';
         });
