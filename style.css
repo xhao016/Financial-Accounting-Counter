@@ -5,11 +5,13 @@
   .container {
     max-width: 50rem;
     background-color: #f9f9f9;
-    padding: 5rem 8rem;
+    padding: 3rem 3rem;
     border-radius: 10px;
     box-shadow: 0px 0px 18px #888888;
   }
   
+
+
   /* The message box is shown when the user clicks on the password field */
   #message {
     display: none;
@@ -57,3 +59,72 @@
 #submit {
   margin-right: 45px;
 }
+
+.fa-close {
+  right: 25px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (max-width: 767.98px) {
+
+.index-container {
+  width: 100%!important;
+}
+
+.salary-container {
+  width: 100%!important;
+}
+
+.display-container {
+  width: 100%!important;
+}
+
+.edit-container {
+  width: 100%!important;
+}
+
+}
+
+/* Small devices (landscape phones, less than 768px) */
+@media (min-width: 767.99px) {
+
+  .index-container {
+    width: 50%!important;
+  }
+
+  .salary-container {
+    width: 80%!important;
+  }
+
+  .display-container {
+  width: 35%!important;
+}
+
+  .edit-container {
+    width: 35%!important;
+  }
+
+  }
+
+  /* Small devices (landscape phones, less than 768px) */
+@media (min-width: 1024px) {
+
+  .index-container {
+    width: 50%!important;
+  }
+
+  .salary-container {
+    width: 35%!important;
+  }
+
+  .display-container {
+  width: 35%!important;
+}
+
+  .edit-container {
+    width: 35%!important;
+  }
+
+  }
