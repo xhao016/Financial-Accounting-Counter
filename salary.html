@@ -4,19 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
 </head>
 
 <body>
   <style>
 
   </style>
-  <div class="container w-50 my-5 border border-2 rounded px-5 py-3 shadow">
-    <h2 class="text-center">Salary List</h2>
+  <div class="container salary-container my-5 border border-2 px-4 rounded py-3 shadow">
+    <h2 class="text-center mb-4">Salary List</h2>
     <div class="d-flex align-items-center gap-2">
 <button class="btn btn-primary" onclick="window.location.href = 'index.html'">Calculate</button>
+<input type="text" name="search_box" id="search" class="form-control" placeholder="Search date..." onfocus="this.value=''" >
 <button class="btn btn-primary ms-auto print">Print</button>
+
 </div>
 
 <table id="usersalary" class=" mt-3 table table-hover text-center align-middle">
@@ -34,6 +40,34 @@
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script>
+
+// Get the input element
+var input = document.getElementById('search');
+
+// Add an event listener to the input element
+input.addEventListener('input', function() {
+  // Get the table rows
+  var rows = document.querySelectorAll('#usersalary tbody tr');
+
+  // Get the search term
+  var searchTerm = input.value.toLowerCase();
+
+  // Loop through the rows and hide/show them based on the search term
+  rows.forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    var match = false;
+    cells.forEach(function(cell) {
+      if (cell.textContent.toLowerCase().indexOf(searchTerm) > -1) {
+        match = true;
+      }
+    });
+    if (match) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
 
 $(document).ready(function() {
   $('.print').click(function() {
