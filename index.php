@@ -6,6 +6,7 @@ if(isset($_POST['submit'])){
 
   $month = $_POST['month'];
   $salaryInput = $_POST['salary'];
+  $record_id = $_POST['record_id'];
   
   /* Processing your input */
   $salary = number_format((float)$salaryInput, 2, '.', '');
