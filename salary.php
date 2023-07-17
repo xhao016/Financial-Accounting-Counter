@@ -31,7 +31,7 @@ include 'connect.php';
 
 </div>
 
-<table id="usersalary" class=" mt-3 table table-hover text-center align-middle">
+<table id="salary" class=" mt-3 table table-hover text-center align-middle">
   <thead>
     <tr class="table-dark">
       <th scope="col" >Date</th>
@@ -69,7 +69,33 @@ include 'connect.php';
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script>
+// Get the input element
+var input = document.getElementById('search');
 
+// Add an event listener to the input element
+input.addEventListener('input', function() {
+  // Get the table rows
+  var rows = document.querySelectorAll('#salary tbody tr');
+
+  // Get the search term
+  var searchTerm = input.value.toLowerCase();
+
+  // Loop through the rows and hide/show them based on the search term
+  rows.forEach(function(row) {
+    var cells = row.querySelectorAll('td');
+    var match = false;
+    cells.forEach(function(cell) {
+      if (cell.textContent.toLowerCase().indexOf(searchTerm) > -1) {
+        match = true;
+      }
+    });
+    if (match) {
+      row.style.display = '';
+    } else {
+      row.style.display = 'none';
+    }
+  });
+});
 </script>
 </body>
 </html>
