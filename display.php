@@ -35,7 +35,6 @@ include 'connect.php';
       <th scope="col">Long Term Save</th>
       <th scope="col">Entertainment</th>
       <th scope="col">Give Account</th>
-      <th scope="col">Action</th>
     </tr>
   </thead>
   <tbody>
