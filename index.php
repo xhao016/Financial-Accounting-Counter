@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
   $entertainment = number_format($salary * 0.1, 2, '.', '');
   $give = number_format($salary * 0.05, 2, '.', '');
   
- // Prepare the SQL query with placeholders
+ // Prepare the SQL query with placeholders, it will be more safe and prevent SQL injection
  $sql = "INSERT INTO `record_account` (date_record, amount_income) VALUES (?, ?)";
   
  // Create a prepared statement
@@ -43,9 +43,16 @@ if(isset($_POST['submit'])){
         VALUES (?, ?, ?, ?, ?, ?, ?)";
   $stmt = $con->prepare($sql);
   $stmt->bind_param("idddddd", $record_id, $necessity, $financial, $education, $longTerm, $entertainment, $give);
-  $stmt->execute() or die("Error: ".$stmt->error);
+  if ($stmt->execute()) {
+    
+    echo "Investment records created successfully";
+    header('Location: salary.php');
+    exit();
+ } else {
+    echo "Error: " . $stmt->error;
+ }
 
-  echo "Investment records created successfully";
+ 
 }
 ?>
 
@@ -66,7 +73,7 @@ if(isset($_POST['submit'])){
 <body>
 
 
-  <form class="container index-container my-5 requires-validation" action="salary.php" method="post" id="register_form" novalidate>
+  <form class="container index-container my-5 needs-validation" method="post" id="register_form" novalidate>
     <h1 class="text-center mb-5"> Calculate Financial</h1>
     <div class="mb-3">
       <label for="month" class="form-label " >Date</label>
@@ -96,6 +103,27 @@ if(isset($_POST['submit'])){
 </form>
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="index.js"></script>
+  <script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
+
 
 </body>
 </html>
