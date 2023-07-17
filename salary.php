@@ -53,9 +53,9 @@ include 'connect.php';
             <td><?php echo $row['date_record']; ?></td>
             <td><?php echo $row['amount_income']; ?></td>
             <td>
-              <button class="btn btn-success view-button" data-id="<?php echo $row['record_id']; ?>">View</button>
-              <button class="btn btn-primary edit-button" data-id="<?php echo $row['record_id']; ?>">Edit</button>
-              <button class="btn btn-danger delete-button" data-id="<?php echo $row['record_id']; ?>">Delete</button>
+            <a href="view.php?view_id=<?php echo $row['record_id']; ?>" class="btn btn-success view-button">View</a>
+            <a href="update.php?updateid=<?php echo $row['record_id']; ?>" class="btn btn-primary edit-button">Edit</a>
+            <a href="delete.php?deleteid=<?php echo $row['record_id']; ?>" class="btn btn-danger delete-button">Delete</a>
             </td>
           </tr>
     <?php   }
