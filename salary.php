@@ -60,7 +60,7 @@ include 'connect.php';
           </tr>
     <?php   }
     } else {
-        echo "No results found";
+        echo '<p class="text-center mt-2"> Data is empty.</p>';
     }
   ?>
   </tbody>
