@@ -16,7 +16,7 @@ die("Connection failed: " .$con->connect_error);
 
 }
 else {
-    echo ("<br>Database Connected.");
+    error_log ("<br>Database Connected.");
 }
 
 ?>
