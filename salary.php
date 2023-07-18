@@ -47,6 +47,8 @@ include 'connect.php';
     $con->close();
 
     if ($result->num_rows > 0) {
+
+
         // output data of each row
         while($row = $result->fetch_assoc()) { ?>
           <tr>
@@ -56,7 +58,7 @@ include 'connect.php';
             <a href="view.php?viewid=<?php echo $row['record_id']; ?>" class="btn btn-success view-button">View</a>
             <a href="update.php?updateid=<?php echo $row['record_id']; ?>" class="btn btn-primary edit-button">Edit</a>
             <button class="btn btn-danger delete-button" id="delete" data-deleteid="<?php echo $row['record_id']; ?>">Delete</button>
-            <!-- <a href="delete.php?deleteid=<?php echo $row['record_id']; ?>" class="btn btn-danger delete-button">Delete</a> -->
+    
             </td>
           </tr>
     <?php   }
@@ -84,27 +86,29 @@ $(document).ready(function() {
   });
   
 
-  $('#delete').on('click', function () {
+  document.documentElement.style.setProperty('--animate-duration', '.3s');
 
-    var el = event.target || event.srcElement;
-    var deleteid = el.getAttribute('data-deleteid');
+  $('.delete-button').on('click', function () {
+
+    var deleteid = $(this).data('deleteid');
 
     //custom delete confirmation
     //  stack ref: https://stackoverflow.com/questions/72284633/how-to-send-custom-value-to-sweetalert-javascript-code-from-php
 Swal.fire({
 // title: 'Are you sure?',
 showClass: {
-    popup: 'animate__animated animate__fadeIn animate__faster'
+    popup: 'animate__animated animate__zoomIn'
   },
   hideClass: {
-    popup: 'animate__animated animate__fadeOut animate__faster'
+    popup: 'animate__animated animate__zoomOut'
   },
 text: "Delete this record?",
 icon: 'warning',
 showCancelButton: true,
 confirmButtonColor: '#3085d6',
 cancelButtonColor: '#d33',
-confirmButtonText: 'Yes'
+confirmButtonText: 'Yes',
+cancelButtonText: 'No'
 }).then((result) => {
 if (result.isConfirmed) {
   window.location.href = "delete.php?deleteid=" + deleteid;
