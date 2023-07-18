@@ -53,9 +53,9 @@ include 'connect.php';
             <td><?php echo $row['date_record']; ?></td>
             <td><?php echo $row['amount_income']; ?></td>
             <td>
-            <a href="view.php?view_id=<?php echo $row['record_id']; ?>" class="btn btn-success view-button">View</a>
+            <a href="view.php?viewid=<?php echo $row['record_id']; ?>" class="btn btn-success view-button">View</a>
             <a href="update.php?updateid=<?php echo $row['record_id']; ?>" class="btn btn-primary edit-button">Edit</a>
-            <a href="delete.php?deleteid=<?php echo $row['record_id']; ?>" class="btn btn-danger delete-button">Delete</a>
+            <a href="delete.php?deleteid=<?php echo $row['record_id']; ?>" class="btn btn-danger delete-button" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
             </td>
           </tr>
     <?php   }
@@ -69,6 +69,14 @@ include 'connect.php';
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <script>
+
+//Print 
+$(document).ready(function() {
+  $('.print').click(function() {
+    window.print();
+  });
+});
+
 // Get the input element
 var input = document.getElementById('search');
 
