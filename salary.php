@@ -14,7 +14,7 @@ include 'connect.php';
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
 </head>
 
@@ -55,7 +55,8 @@ include 'connect.php';
             <td>
             <a href="view.php?viewid=<?php echo $row['record_id']; ?>" class="btn btn-success view-button">View</a>
             <a href="update.php?updateid=<?php echo $row['record_id']; ?>" class="btn btn-primary edit-button">Edit</a>
-            <a href="delete.php?deleteid=<?php echo $row['record_id']; ?>" class="btn btn-danger delete-button" onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
+            <button class="btn btn-danger delete-button" id="delete" data-deleteid="<?php echo $row['record_id']; ?>">Delete</button>
+            <!-- <a href="delete.php?deleteid=<?php echo $row['record_id']; ?>" class="btn btn-danger delete-button">Delete</a> -->
             </td>
           </tr>
     <?php   }
@@ -68,6 +69,12 @@ include 'connect.php';
 </div>
 
 <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+<script src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.18/dist/sweetalert2.all.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.7.18/dist/sweetalert2.min.css
+" rel="stylesheet">
 <script>
 
 //Print 
@@ -75,7 +82,41 @@ $(document).ready(function() {
   $('.print').click(function() {
     window.print();
   });
+  
+
+  $('#delete').on('click', function () {
+
+    var el = event.target || event.srcElement;
+    var deleteid = el.getAttribute('data-deleteid');
+
+    //custom delete confirmation
+    //  stack ref: https://stackoverflow.com/questions/72284633/how-to-send-custom-value-to-sweetalert-javascript-code-from-php
+Swal.fire({
+// title: 'Are you sure?',
+showClass: {
+    popup: 'animate__animated animate__fadeIn animate__faster'
+  },
+  hideClass: {
+    popup: 'animate__animated animate__fadeOut animate__faster'
+  },
+text: "Delete this record?",
+icon: 'warning',
+showCancelButton: true,
+confirmButtonColor: '#3085d6',
+cancelButtonColor: '#d33',
+confirmButtonText: 'Yes'
+}).then((result) => {
+if (result.isConfirmed) {
+  window.location.href = "delete.php?deleteid=" + deleteid;
+}
+})
 });
+
+
+});
+
+
+
 
 // Get the input element
 var input = document.getElementById('search');
