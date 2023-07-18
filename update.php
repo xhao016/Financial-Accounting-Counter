@@ -13,8 +13,7 @@ $salaryInput = $row['amount_income'];;
 
 if(isset($_POST['submit'])){
 
-     // Get record id
-  $record_id= $_GET['updateid'];
+  $record_id = $_GET['updateid'];
   $month = $_POST['month'];
   $salaryInput = $_POST['salary'];
   
@@ -44,13 +43,16 @@ if(isset($_POST['submit'])){
   }
 
   /* Preparing and executing the second SQL query to UPDATE investment_type table */
-  $sql = "UPDATE investment_type SET necessity_account = ?, financial_freedom = ?, education_account = ?, long_term_save = ?, entertainment = ?, give_account = ? 
-          WHERE record_id = ?"; // added WHERE clause to update a specific row
+  $sql = "UPDATE investment_type SET necessity_account = ?, financial_freedom = ?, education_account = ?, long_term_save = ?, entertainment = ?, give_account = ? WHERE record_id = ?";
   $stmt = $con->prepare($sql);
-  $stmt->bind_param("ddddddi", $necessity, $financial, $education, $longTerm, $entertainment, $give, $investment_id); // added $investment_id variable here
-  $stmt->execute() or die("Error: ".$stmt->error);
+  $stmt->bind_param("ddddddi", $necessity, $financial, $education, $longTerm, $entertainment, $give, $record_id);
+  if ($stmt->execute()) {
 
-  echo "Investment records updated successfully";
+    header('Location: salary.php');
+    exit();
+ } else {
+    echo "Error: " . $stmt->error;
+ }
 }
 ?>
 
@@ -76,7 +78,7 @@ if(isset($_POST['submit'])){
 
   <div class="container edit-container w-25 my-5 border border-2 rounded py-3 shadow">
     <h2 class="text-center mb-4">Edit Details</h2>
-  <form id="edit-form" method="POST" action="salary.php">
+  <form id="edit-form" method="POST">
     <div class="mb-3">
       <div class="mb-3">
         <input type="date" class="form-control" id="month" name="month" value="<?php echo $month ?>" required>
