@@ -87,9 +87,9 @@ if(isset($_POST['submit'])){
         <label for="salary" class="form-label" >Salary</label>
         <div class="input-group">
         <span class="input-group-text">RM</span>
-        <input type="number" class="form-control " id="salary" name="salary" step="any" required>
+        <input type="number" class="form-control " id="salary" name="salary" step="any" maxlength="6" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" required>
           <div class="invalid-feedback">
-           Please input salary.
+           Please input salary less than 100000.
           </div>
         </div>
       </div>
@@ -104,7 +104,8 @@ if(isset($_POST['submit'])){
   <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
   <script src="index.js"></script>
   <script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
+
+// Disabling form submissions if there are invalid fields
 (function() {
   'use strict';
   window.addEventListener('load', function() {
@@ -122,7 +123,6 @@ if(isset($_POST['submit'])){
     });
   }, false);
 })();
-
 
 const resetButton = document.querySelector('#reset');
  const inputFields = document.querySelectorAll('input');
