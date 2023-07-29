@@ -2,6 +2,13 @@
 
 include 'connect.php';
 
+$record_id = $_GET['viewid'];
+
+$sql = "SELECT * FROM record_account WHERE record_id = $record_id";
+$result = mysqli_query($con, $sql);
+$row = mysqli_fetch_assoc($result);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +26,7 @@ include 'connect.php';
 
 <body>
   <div class="container display-container my-5 border border-2 px-4 rounded py-3 shadow">
-    <h2 class="text-center mb-4">Account List</h2>
+    <h2 class="text-center mb-4"><?php echo 'Salary: RM'. $row['amount_income']; ?></h2>
     <div class="d-flex align-items-center gap-2">
       
       <button class="btn btn-primary" onclick="window.location.href = 'salary.php'"><< Back</button>
@@ -28,7 +35,7 @@ include 'connect.php';
     <table id="usersalary" class="mt-3 table table-hover align-middle">
   <thead>
     <tr class="table-dark">
-      <th scope="col">Accounts</th>
+      <th scope="col">Categories</th>
       <th scope="col">Amount (RM)</th>
     </tr>
   </thead>
