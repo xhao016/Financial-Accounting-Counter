@@ -35,7 +35,7 @@ include 'connect.php';
   <thead>
     <tr class="table-dark">
       <th scope="col" >Date</th>
-      <th scope="col">Salary</th>
+      <th scope="col">Salary (RM)</th>
       <th scope="col" >Action</th>
     </tr>
   </thead>
